@@ -10,15 +10,15 @@ class ContactListsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _ContactGroupsView(
+    return _ContactListsView(
       listId: listId,
       automaticallyImplyLeading: true,
     );
   }
 }
 
-class _ContactGroupsView extends StatelessWidget {
-  const _ContactGroupsView({
+class _ContactListsView extends StatelessWidget {
+  const _ContactListsView({
     required this.listId,
     this.automaticallyImplyLeading = true,
   });
@@ -102,6 +102,20 @@ class ContactListSection extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ContactListDetail extends StatelessWidget {
+  const ContactListDetail({super.key, required this.listId});
+
+  final int listId;
+
+  @override
+  Widget build(BuildContext context) {
+    return _ContactListsView(
+      listId: listId,
+      automaticallyImplyLeading: true,
     );
   }
 }

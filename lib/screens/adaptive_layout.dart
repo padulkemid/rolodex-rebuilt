@@ -12,13 +12,13 @@ class AdaptiveLayout extends StatefulWidget {
 }
 
 class _AdaptiveLayoutState extends State<AdaptiveLayout> {
-  // int _selectedListId = 0;
+  int _selectedListId = 0;
 
-  /* void _onContactListSelected(int listId) {
+  void _onContactListSelected(int listId) {
     setState(() {
       _selectedListId = listId;
     });
-  } */
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +26,30 @@ class _AdaptiveLayoutState extends State<AdaptiveLayout> {
       builder: (_, BoxConstraints constraints) {
         final isLargeScreen = constraints.maxWidth > largeScreenMinWidth;
 
-        if (isLargeScreen) return _ContactGroupsLargeScreen();
-        return ContactListsPage(
+        if (isLargeScreen) {
+          return _ContactGroupsLargeScreen(
+            selectedListId: _selectedListId,
+            onListSelected: _onContactListSelected,
+          );
+        }
+        /* return ContactListsPage(
           listId: 0,
-        );
+        ); */
+
+        return ContactGroupsPage();
       },
     );
   }
 }
 
 class _ContactGroupsLargeScreen extends StatelessWidget {
-  const _ContactGroupsLargeScreen();
+  const _ContactGroupsLargeScreen({
+    required this.selectedListId,
+    required this.onListSelected,
+  });
+
+  final int selectedListId;
+  final void Function(int) onListSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -47,14 +60,17 @@ class _ContactGroupsLargeScreen extends StatelessWidget {
           children: [
             SizedBox(
               width: 320,
-              child: Text('sidebar'),
+              child: ContactGroupsSidebar(
+                selectedListId: selectedListId,
+                onListSelected: onListSelected,
+              ),
             ),
             Container(
               width: 1,
               color: CupertinoColors.separator,
             ),
             Expanded(
-              child: Text('details'),
+              child: ContactListDetail(listId: selectedListId),
             ),
           ],
         ),
